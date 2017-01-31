@@ -21,6 +21,7 @@ public class Atleta {
     private String nombre;
     private String apellidos;
     private String nacionalidad;
+    @JsonIgnore
     private LocalDate nacimiento;
     @OneToMany(mappedBy = "atleta")
     @JsonIgnore

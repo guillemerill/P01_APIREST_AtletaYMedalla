@@ -5,6 +5,7 @@ import com.carrera.domain.TipoMedalla;
 import com.carrera.repository.AtletaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -14,13 +15,37 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/atleta")
-public class AtletaController {
+public class  AtletaController {
     @Autowired
     private AtletaRepository atletaRepository;
 
+    // CRUD
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public Atleta createAtleta(@RequestBody Atleta atleta){
+        return atletaRepository.save(atleta);
+    }
+
     @GetMapping
-    public List<Atleta> findAllAtletas() {
+    public List<Atleta> getAllAtletas(){
         return atletaRepository.findAll();
+    }
+
+    @PutMapping
+    public Atleta updateAtleta(@RequestBody Atleta atleta){
+        return atletaRepository.save(atleta);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteAtleta(@PathVariable Long id){
+        Atleta atleta = atletaRepository.findOne(id);
+        if(atleta != null ) atletaRepository.delete(id);
+    }
+
+
+    @GetMapping("/atleta/{apellido}")
+    public Atleta getAtleta(@PathVariable String nombre) {
+        return atletaRepository.getAtleta(nombre);
     }
 
     // 1. Devolver todos los Atletas de una nacionalidad determinada

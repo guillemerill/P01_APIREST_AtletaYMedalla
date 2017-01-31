@@ -9,6 +9,12 @@ import java.time.LocalDate;
 import java.util.List;
 
 public interface AtletaRepository extends JpaRepository<Atleta, Long> {
+    @Query("SELECT a FROM Atleta a")
+    List<Atleta> findAll();
+
+    @Query("SELECT a FROM Atleta a WHERE a.nombre =:nombre")
+    Atleta getAtleta(@Param("nombre") String nombre);
+
     @Query("SELECT a FROM Atleta a WHERE a.nacionalidad =:nacionalidad")
     List<Atleta> getByNacionalidad(@Param("nacionalidad") String nacionalidad);
 
